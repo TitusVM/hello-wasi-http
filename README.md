@@ -1,3 +1,19 @@
+# Composed http server
+Build both components:
+```sh
+cargo component build --target=wasm32-unknown-unknown
+cd rpn
+cargo component build --target=wasm32-unknown-unknown
+```
+Then compose them using `wac plug`:
+```sh
+wac plug target/wasm32-unknown-unknown/debug/hello_wasi_http.wasm --plug rpn/target/wasm32-unknown-unknown/debug/rpn.wasm -o composition.wasm
+```
+Then serve composed component:
+```sh
+wasmtime serve --addr=0.0.0.0:8080 composition.wasm
+```
+
 # Hello WASI HTTP!
 
 This is a simple tutorial to get started with WASI HTTP using the `wasmtime serve` command introduced in [Wasmtime] 18.0.

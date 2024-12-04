@@ -25,6 +25,7 @@ proxy = true
 "wasi:cli" = { path = "wit/deps/cli" }
 "wasi:filesystem" = { path = "wit/deps/filesystem" }
 "wasi:sockets" = { path = "wit/deps/sockets" }
+"component:rpn" = { path = "wit/deps/rpn" }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

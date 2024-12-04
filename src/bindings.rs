@@ -1,4 +1,164 @@
 #[allow(dead_code)]
+pub mod component {
+    #[allow(dead_code)]
+    pub mod rpn {
+        #[allow(dead_code, clippy::all)]
+        pub mod types {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            #[repr(u8)]
+            #[derive(Clone, Copy, Eq, PartialEq)]
+            pub enum Operation {
+                Add,
+                Sub,
+                Mul,
+                Div,
+            }
+            impl ::core::fmt::Debug for Operation {
+                fn fmt(
+                    &self,
+                    f: &mut ::core::fmt::Formatter<'_>,
+                ) -> ::core::fmt::Result {
+                    match self {
+                        Operation::Add => f.debug_tuple("Operation::Add").finish(),
+                        Operation::Sub => f.debug_tuple("Operation::Sub").finish(),
+                        Operation::Mul => f.debug_tuple("Operation::Mul").finish(),
+                        Operation::Div => f.debug_tuple("Operation::Div").finish(),
+                    }
+                }
+            }
+            impl Operation {
+                #[doc(hidden)]
+                pub unsafe fn _lift(val: u8) -> Operation {
+                    if !cfg!(debug_assertions) {
+                        return ::core::mem::transmute(val);
+                    }
+                    match val {
+                        0 => Operation::Add,
+                        1 => Operation::Sub,
+                        2 => Operation::Mul,
+                        3 => Operation::Div,
+                        _ => panic!("invalid enum discriminant"),
+                    }
+                }
+            }
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct Engine {
+                handle: _rt::Resource<Engine>,
+            }
+            impl Engine {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for Engine {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "component:rpn/types@0.1.0")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]engine"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            impl Engine {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn new() -> Self {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "component:rpn/types@0.1.0")]
+                        extern "C" {
+                            #[link_name = "[constructor]engine"]
+                            fn wit_import() -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import() -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import();
+                        Engine::from_handle(ret as u32)
+                    }
+                }
+            }
+            impl Engine {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn push_operand(&self, operand: u32) {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "component:rpn/types@0.1.0")]
+                        extern "C" {
+                            #[link_name = "[method]engine.push-operand"]
+                            fn wit_import(_: i32, _: i32);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: i32) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, _rt::as_i32(&operand));
+                    }
+                }
+            }
+            impl Engine {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn push_operation(&self, operation: Operation) {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "component:rpn/types@0.1.0")]
+                        extern "C" {
+                            #[link_name = "[method]engine.push-operation"]
+                            fn wit_import(_: i32, _: i32);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: i32) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, operation.clone() as i32);
+                    }
+                }
+            }
+            impl Engine {
+                #[allow(unused_unsafe, clippy::all)]
+                pub fn execute(&self) -> u32 {
+                    unsafe {
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "component:rpn/types@0.1.0")]
+                        extern "C" {
+                            #[link_name = "[method]engine.execute"]
+                            fn wit_import(_: i32) -> i32;
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32) -> i32 {
+                            unreachable!()
+                        }
+                        let ret = wit_import((self).handle() as i32);
+                        ret as u32
+                    }
+                }
+            }
+        }
+    }
+}
+#[allow(dead_code)]
 pub mod wasi {
     #[allow(dead_code)]
     pub mod cli {
@@ -1665,7 +1825,7 @@ pub mod wasi {
                             }
                             ptr
                         } else {
-                            ::core::ptr::null_mut()
+                            { ::core::ptr::null_mut() }
                         };
                         for (i, e) in vec3.into_iter().enumerate() {
                             let base = result3.add(i * 16);
@@ -1839,7 +1999,7 @@ pub mod wasi {
                             }
                             ptr
                         } else {
-                            ::core::ptr::null_mut()
+                            { ::core::ptr::null_mut() }
                         };
                         for (i, e) in vec2.into_iter().enumerate() {
                             let base = result2.add(i * 8);
@@ -6399,105 +6559,6 @@ pub mod wasi {
     #[allow(dead_code)]
     pub mod io {
         #[allow(dead_code, clippy::all)]
-        pub mod error {
-            #[used]
-            #[doc(hidden)]
-            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
-            use super::super::super::_rt;
-            /// A resource which represents some error information.
-            ///
-            /// The only method provided by this resource is `to-debug-string`,
-            /// which provides some human-readable information about the error.
-            ///
-            /// In the `wasi:io` package, this resource is returned through the
-            /// `wasi:io/streams/stream-error` type.
-            ///
-            /// To provide more specific error information, other interfaces may
-            /// provide functions to further "downcast" this error into more specific
-            /// error information. For example, `error`s returned in streams derived
-            /// from filesystem types to be described using the filesystem's own
-            /// error-code type, using the function
-            /// `wasi:filesystem/types/filesystem-error-code`, which takes a parameter
-            /// `borrow<error>` and returns
-            /// `option<wasi:filesystem/types/error-code>`.
-            ///
-            /// The set of functions which can "downcast" an `error` into a more
-            /// concrete type is open.
-            #[derive(Debug)]
-            #[repr(transparent)]
-            pub struct Error {
-                handle: _rt::Resource<Error>,
-            }
-            impl Error {
-                #[doc(hidden)]
-                pub unsafe fn from_handle(handle: u32) -> Self {
-                    Self {
-                        handle: _rt::Resource::from_handle(handle),
-                    }
-                }
-                #[doc(hidden)]
-                pub fn take_handle(&self) -> u32 {
-                    _rt::Resource::take_handle(&self.handle)
-                }
-                #[doc(hidden)]
-                pub fn handle(&self) -> u32 {
-                    _rt::Resource::handle(&self.handle)
-                }
-            }
-            unsafe impl _rt::WasmResource for Error {
-                #[inline]
-                unsafe fn drop(_handle: u32) {
-                    #[cfg(not(target_arch = "wasm32"))]
-                    unreachable!();
-                    #[cfg(target_arch = "wasm32")]
-                    {
-                        #[link(wasm_import_module = "wasi:io/error@0.2.0")]
-                        extern "C" {
-                            #[link_name = "[resource-drop]error"]
-                            fn drop(_: u32);
-                        }
-                        drop(_handle);
-                    }
-                }
-            }
-            impl Error {
-                #[allow(unused_unsafe, clippy::all)]
-                /// Returns a string that is suitable to assist humans in debugging
-                /// this error.
-                ///
-                /// WARNING: The returned string should not be consumed mechanically!
-                /// It may change across platforms, hosts, or other implementation
-                /// details. Parsing this string is a major platform-compatibility
-                /// hazard.
-                pub fn to_debug_string(&self) -> _rt::String {
-                    unsafe {
-                        #[repr(align(4))]
-                        struct RetArea([::core::mem::MaybeUninit<u8>; 8]);
-                        let mut ret_area = RetArea(
-                            [::core::mem::MaybeUninit::uninit(); 8],
-                        );
-                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
-                        #[cfg(target_arch = "wasm32")]
-                        #[link(wasm_import_module = "wasi:io/error@0.2.0")]
-                        extern "C" {
-                            #[link_name = "[method]error.to-debug-string"]
-                            fn wit_import(_: i32, _: *mut u8);
-                        }
-                        #[cfg(not(target_arch = "wasm32"))]
-                        fn wit_import(_: i32, _: *mut u8) {
-                            unreachable!()
-                        }
-                        wit_import((self).handle() as i32, ptr0);
-                        let l1 = *ptr0.add(0).cast::<*mut u8>();
-                        let l2 = *ptr0.add(4).cast::<usize>();
-                        let len3 = l2;
-                        let bytes3 = _rt::Vec::from_raw_parts(l1.cast(), len3, len3);
-                        _rt::string_lift(bytes3)
-                    }
-                }
-            }
-        }
-        #[allow(dead_code, clippy::all)]
         pub mod poll {
             #[used]
             #[doc(hidden)]
@@ -6623,7 +6684,7 @@ pub mod wasi {
                         }
                         ptr
                     } else {
-                        ::core::ptr::null_mut()
+                        { ::core::ptr::null_mut() }
                     };
                     for (i, e) in vec0.into_iter().enumerate() {
                         let base = result0.add(i * 4);
@@ -6650,6 +6711,105 @@ pub mod wasi {
                         _rt::alloc::dealloc(result0.cast(), layout0);
                     }
                     _rt::Vec::from_raw_parts(l2.cast(), len4, len4)
+                }
+            }
+        }
+        #[allow(dead_code, clippy::all)]
+        pub mod error {
+            #[used]
+            #[doc(hidden)]
+            static __FORCE_SECTION_REF: fn() = super::super::super::__link_custom_section_describing_imports;
+            use super::super::super::_rt;
+            /// A resource which represents some error information.
+            ///
+            /// The only method provided by this resource is `to-debug-string`,
+            /// which provides some human-readable information about the error.
+            ///
+            /// In the `wasi:io` package, this resource is returned through the
+            /// `wasi:io/streams/stream-error` type.
+            ///
+            /// To provide more specific error information, other interfaces may
+            /// provide functions to further "downcast" this error into more specific
+            /// error information. For example, `error`s returned in streams derived
+            /// from filesystem types to be described using the filesystem's own
+            /// error-code type, using the function
+            /// `wasi:filesystem/types/filesystem-error-code`, which takes a parameter
+            /// `borrow<error>` and returns
+            /// `option<wasi:filesystem/types/error-code>`.
+            ///
+            /// The set of functions which can "downcast" an `error` into a more
+            /// concrete type is open.
+            #[derive(Debug)]
+            #[repr(transparent)]
+            pub struct Error {
+                handle: _rt::Resource<Error>,
+            }
+            impl Error {
+                #[doc(hidden)]
+                pub unsafe fn from_handle(handle: u32) -> Self {
+                    Self {
+                        handle: _rt::Resource::from_handle(handle),
+                    }
+                }
+                #[doc(hidden)]
+                pub fn take_handle(&self) -> u32 {
+                    _rt::Resource::take_handle(&self.handle)
+                }
+                #[doc(hidden)]
+                pub fn handle(&self) -> u32 {
+                    _rt::Resource::handle(&self.handle)
+                }
+            }
+            unsafe impl _rt::WasmResource for Error {
+                #[inline]
+                unsafe fn drop(_handle: u32) {
+                    #[cfg(not(target_arch = "wasm32"))]
+                    unreachable!();
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        #[link(wasm_import_module = "wasi:io/error@0.2.0")]
+                        extern "C" {
+                            #[link_name = "[resource-drop]error"]
+                            fn drop(_: u32);
+                        }
+                        drop(_handle);
+                    }
+                }
+            }
+            impl Error {
+                #[allow(unused_unsafe, clippy::all)]
+                /// Returns a string that is suitable to assist humans in debugging
+                /// this error.
+                ///
+                /// WARNING: The returned string should not be consumed mechanically!
+                /// It may change across platforms, hosts, or other implementation
+                /// details. Parsing this string is a major platform-compatibility
+                /// hazard.
+                pub fn to_debug_string(&self) -> _rt::String {
+                    unsafe {
+                        #[repr(align(4))]
+                        struct RetArea([::core::mem::MaybeUninit<u8>; 8]);
+                        let mut ret_area = RetArea(
+                            [::core::mem::MaybeUninit::uninit(); 8],
+                        );
+                        let ptr0 = ret_area.0.as_mut_ptr().cast::<u8>();
+                        #[cfg(target_arch = "wasm32")]
+                        #[link(wasm_import_module = "wasi:io/error@0.2.0")]
+                        extern "C" {
+                            #[link_name = "[method]error.to-debug-string"]
+                            fn wit_import(_: i32, _: *mut u8);
+                        }
+                        #[cfg(not(target_arch = "wasm32"))]
+                        fn wit_import(_: i32, _: *mut u8) {
+                            unreachable!()
+                        }
+                        wit_import((self).handle() as i32, ptr0);
+                        let l1 = *ptr0.add(0).cast::<*mut u8>();
+                        let l2 = *ptr0.add(4).cast::<usize>();
+                        let len3 = l2;
+                        let bytes3 = _rt::Vec::from_raw_parts(l1.cast(), len3, len3);
+                        _rt::string_lift(bytes3)
+                    }
                 }
             }
         }
@@ -7861,30 +8021,6 @@ pub mod exports {
     }
 }
 mod _rt {
-    pub use alloc_crate::vec::Vec;
-    pub fn as_i64<T: AsI64>(t: T) -> i64 {
-        t.as_i64()
-    }
-    pub trait AsI64 {
-        fn as_i64(self) -> i64;
-    }
-    impl<'a, T: Copy + AsI64> AsI64 for &'a T {
-        fn as_i64(self) -> i64 {
-            (*self).as_i64()
-        }
-    }
-    impl AsI64 for i64 {
-        #[inline]
-        fn as_i64(self) -> i64 {
-            self as i64
-        }
-    }
-    impl AsI64 for u64 {
-        #[inline]
-        fn as_i64(self) -> i64 {
-            self as i64
-        }
-    }
     use core::fmt;
     use core::marker;
     use core::sync::atomic::{AtomicU32, Ordering::Relaxed};
@@ -7959,40 +8095,6 @@ mod _rt {
             }
         }
     }
-    pub use alloc_crate::string::String;
-    pub unsafe fn string_lift(bytes: Vec<u8>) -> String {
-        if cfg!(debug_assertions) {
-            String::from_utf8(bytes).unwrap()
-        } else {
-            String::from_utf8_unchecked(bytes)
-        }
-    }
-    pub unsafe fn bool_lift(val: u8) -> bool {
-        if cfg!(debug_assertions) {
-            match val {
-                0 => false,
-                1 => true,
-                _ => panic!("invalid bool discriminant"),
-            }
-        } else {
-            val != 0
-        }
-    }
-    pub use alloc_crate::alloc;
-    pub unsafe fn invalid_enum_discriminant<T>() -> T {
-        if cfg!(debug_assertions) {
-            panic!("invalid enum discriminant")
-        } else {
-            core::hint::unreachable_unchecked()
-        }
-    }
-    pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
-        if size == 0 {
-            return;
-        }
-        let layout = alloc::Layout::from_size_align_unchecked(size, align);
-        alloc::dealloc(ptr, layout);
-    }
     pub fn as_i32<T: AsI32>(t: T) -> i32 {
         t.as_i32()
     }
@@ -8052,6 +8154,64 @@ mod _rt {
             self as i32
         }
     }
+    pub unsafe fn bool_lift(val: u8) -> bool {
+        if cfg!(debug_assertions) {
+            match val {
+                0 => false,
+                1 => true,
+                _ => panic!("invalid bool discriminant"),
+            }
+        } else {
+            val != 0
+        }
+    }
+    pub use alloc_crate::vec::Vec;
+    pub use alloc_crate::alloc;
+    pub fn as_i64<T: AsI64>(t: T) -> i64 {
+        t.as_i64()
+    }
+    pub trait AsI64 {
+        fn as_i64(self) -> i64;
+    }
+    impl<'a, T: Copy + AsI64> AsI64 for &'a T {
+        fn as_i64(self) -> i64 {
+            (*self).as_i64()
+        }
+    }
+    impl AsI64 for i64 {
+        #[inline]
+        fn as_i64(self) -> i64 {
+            self as i64
+        }
+    }
+    impl AsI64 for u64 {
+        #[inline]
+        fn as_i64(self) -> i64 {
+            self as i64
+        }
+    }
+    pub use alloc_crate::string::String;
+    pub unsafe fn string_lift(bytes: Vec<u8>) -> String {
+        if cfg!(debug_assertions) {
+            String::from_utf8(bytes).unwrap()
+        } else {
+            String::from_utf8_unchecked(bytes)
+        }
+    }
+    pub unsafe fn invalid_enum_discriminant<T>() -> T {
+        if cfg!(debug_assertions) {
+            panic!("invalid enum discriminant")
+        } else {
+            core::hint::unreachable_unchecked()
+        }
+    }
+    pub unsafe fn cabi_dealloc(ptr: *mut u8, size: usize, align: usize) {
+        if size == 0 {
+            return;
+        }
+        let layout = alloc::Layout::from_size_align_unchecked(size, align);
+        alloc::dealloc(ptr, layout);
+    }
     #[cfg(target_arch = "wasm32")]
     pub fn run_ctors_once() {
         wit_bindgen_rt::run_ctors_once();
@@ -8089,151 +8249,157 @@ macro_rules! __export_target_world_impl {
 #[doc(inline)]
 pub(crate) use __export_target_world_impl as export;
 #[cfg(target_arch = "wasm32")]
-#[link_section = "component-type:wit-bindgen:0.35.0:sunfishcode:hello-wasi-http:target-world:encoded world"]
+#[link_section = "component-type:wit-bindgen:0.30.0:target-world:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 7050] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x876\x01A\x02\x01A#\x01\
-B\x05\x01p}\x01@\x01\x03lenw\0\0\x04\0\x10get-random-bytes\x01\x01\x01@\0\0w\x04\
-\0\x0eget-random-u64\x01\x02\x03\0\x18wasi:random/random@0.2.0\x05\0\x01B\x04\x04\
-\0\x05error\x03\x01\x01h\0\x01@\x01\x04self\x01\0s\x04\0\x1d[method]error.to-deb\
-ug-string\x01\x02\x03\0\x13wasi:io/error@0.2.0\x05\x01\x01B\x0a\x04\0\x08pollabl\
-e\x03\x01\x01h\0\x01@\x01\x04self\x01\0\x7f\x04\0\x16[method]pollable.ready\x01\x02\
-\x01@\x01\x04self\x01\x01\0\x04\0\x16[method]pollable.block\x01\x03\x01p\x01\x01\
-py\x01@\x01\x02in\x04\0\x05\x04\0\x04poll\x01\x06\x03\0\x12wasi:io/poll@0.2.0\x05\
-\x02\x02\x03\0\x01\x05error\x02\x03\0\x02\x08pollable\x01B(\x02\x03\x02\x01\x03\x04\
-\0\x05error\x03\0\0\x02\x03\x02\x01\x04\x04\0\x08pollable\x03\0\x02\x01i\x01\x01\
-q\x02\x15last-operation-failed\x01\x04\0\x06closed\0\0\x04\0\x0cstream-error\x03\
-\0\x05\x04\0\x0cinput-stream\x03\x01\x04\0\x0doutput-stream\x03\x01\x01h\x07\x01\
-p}\x01j\x01\x0a\x01\x06\x01@\x02\x04self\x09\x03lenw\0\x0b\x04\0\x19[method]inpu\
-t-stream.read\x01\x0c\x04\0\"[method]input-stream.blocking-read\x01\x0c\x01j\x01\
-w\x01\x06\x01@\x02\x04self\x09\x03lenw\0\x0d\x04\0\x19[method]input-stream.skip\x01\
-\x0e\x04\0\"[method]input-stream.blocking-skip\x01\x0e\x01i\x03\x01@\x01\x04self\
-\x09\0\x0f\x04\0\x1e[method]input-stream.subscribe\x01\x10\x01h\x08\x01@\x01\x04\
-self\x11\0\x0d\x04\0![method]output-stream.check-write\x01\x12\x01j\0\x01\x06\x01\
-@\x02\x04self\x11\x08contents\x0a\0\x13\x04\0\x1b[method]output-stream.write\x01\
-\x14\x04\0.[method]output-stream.blocking-write-and-flush\x01\x14\x01@\x01\x04se\
-lf\x11\0\x13\x04\0\x1b[method]output-stream.flush\x01\x15\x04\0$[method]output-s\
-tream.blocking-flush\x01\x15\x01@\x01\x04self\x11\0\x0f\x04\0\x1f[method]output-\
-stream.subscribe\x01\x16\x01@\x02\x04self\x11\x03lenw\0\x13\x04\0\"[method]outpu\
-t-stream.write-zeroes\x01\x17\x04\05[method]output-stream.blocking-write-zeroes-\
-and-flush\x01\x17\x01@\x03\x04self\x11\x03src\x09\x03lenw\0\x0d\x04\0\x1c[method\
-]output-stream.splice\x01\x18\x04\0%[method]output-stream.blocking-splice\x01\x18\
-\x03\0\x15wasi:io/streams@0.2.0\x05\x05\x02\x03\0\x03\x0doutput-stream\x01B\x05\x02\
-\x03\x02\x01\x06\x04\0\x0doutput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\x04\0\x0ag\
-et-stdout\x01\x03\x03\0\x15wasi:cli/stdout@0.2.0\x05\x07\x01B\x05\x02\x03\x02\x01\
-\x06\x04\0\x0doutput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\x04\0\x0aget-stderr\x01\
-\x03\x03\0\x15wasi:cli/stderr@0.2.0\x05\x08\x02\x03\0\x03\x0cinput-stream\x01B\x05\
-\x02\x03\x02\x01\x09\x04\0\x0cinput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\x04\0\x09\
-get-stdin\x01\x03\x03\0\x14wasi:cli/stdin@0.2.0\x05\x0a\x01B\x0f\x02\x03\x02\x01\
-\x04\x04\0\x08pollable\x03\0\0\x01w\x04\0\x07instant\x03\0\x02\x01w\x04\0\x08dur\
-ation\x03\0\x04\x01@\0\0\x03\x04\0\x03now\x01\x06\x01@\0\0\x05\x04\0\x0aresoluti\
-on\x01\x07\x01i\x01\x01@\x01\x04when\x03\0\x08\x04\0\x11subscribe-instant\x01\x09\
-\x01@\x01\x04when\x05\0\x08\x04\0\x12subscribe-duration\x01\x0a\x03\0!wasi:clock\
-s/monotonic-clock@0.2.0\x05\x0b\x02\x03\0\x07\x08duration\x01B\xc0\x01\x02\x03\x02\
-\x01\x0c\x04\0\x08duration\x03\0\0\x02\x03\x02\x01\x09\x04\0\x0cinput-stream\x03\
-\0\x02\x02\x03\x02\x01\x06\x04\0\x0doutput-stream\x03\0\x04\x02\x03\x02\x01\x03\x04\
-\0\x08io-error\x03\0\x06\x02\x03\x02\x01\x04\x04\0\x08pollable\x03\0\x08\x01q\x0a\
-\x03get\0\0\x04head\0\0\x04post\0\0\x03put\0\0\x06delete\0\0\x07connect\0\0\x07o\
-ptions\0\0\x05trace\0\0\x05patch\0\0\x05other\x01s\0\x04\0\x06method\x03\0\x0a\x01\
-q\x03\x04HTTP\0\0\x05HTTPS\0\0\x05other\x01s\0\x04\0\x06scheme\x03\0\x0c\x01ks\x01\
-k{\x01r\x02\x05rcode\x0e\x09info-code\x0f\x04\0\x11DNS-error-payload\x03\0\x10\x01\
-k}\x01r\x02\x08alert-id\x12\x0dalert-message\x0e\x04\0\x1aTLS-alert-received-pay\
-load\x03\0\x13\x01ky\x01r\x02\x0afield-name\x0e\x0afield-size\x15\x04\0\x12field\
--size-payload\x03\0\x16\x01kw\x01k\x17\x01q'\x0bDNS-timeout\0\0\x09DNS-error\x01\
-\x11\0\x15destination-not-found\0\0\x17destination-unavailable\0\0\x19destinatio\
-n-IP-prohibited\0\0\x19destination-IP-unroutable\0\0\x12connection-refused\0\0\x15\
-connection-terminated\0\0\x12connection-timeout\0\0\x17connection-read-timeout\0\
-\0\x18connection-write-timeout\0\0\x18connection-limit-reached\0\0\x12TLS-protoc\
-ol-error\0\0\x15TLS-certificate-error\0\0\x12TLS-alert-received\x01\x14\0\x13HTT\
-P-request-denied\0\0\x1cHTTP-request-length-required\0\0\x16HTTP-request-body-si\
-ze\x01\x18\0\x1bHTTP-request-method-invalid\0\0\x18HTTP-request-URI-invalid\0\0\x19\
-HTTP-request-URI-too-long\0\0\x20HTTP-request-header-section-size\x01\x15\0\x18H\
-TTP-request-header-size\x01\x19\0!HTTP-request-trailer-section-size\x01\x15\0\x19\
-HTTP-request-trailer-size\x01\x17\0\x18HTTP-response-incomplete\0\0!HTTP-respons\
-e-header-section-size\x01\x15\0\x19HTTP-response-header-size\x01\x17\0\x17HTTP-r\
-esponse-body-size\x01\x18\0\"HTTP-response-trailer-section-size\x01\x15\0\x1aHTT\
-P-response-trailer-size\x01\x17\0\x1dHTTP-response-transfer-coding\x01\x0e\0\x1c\
-HTTP-response-content-coding\x01\x0e\0\x15HTTP-response-timeout\0\0\x13HTTP-upgr\
-ade-failed\0\0\x13HTTP-protocol-error\0\0\x0dloop-detected\0\0\x13configuration-\
-error\0\0\x0einternal-error\x01\x0e\0\x04\0\x0aerror-code\x03\0\x1a\x01q\x03\x0e\
-invalid-syntax\0\0\x09forbidden\0\0\x09immutable\0\0\x04\0\x0cheader-error\x03\0\
-\x1c\x01s\x04\0\x09field-key\x03\0\x1e\x01p}\x04\0\x0bfield-value\x03\0\x20\x04\0\
-\x06fields\x03\x01\x04\0\x07headers\x03\0\"\x04\0\x08trailers\x03\0\"\x04\0\x10i\
-ncoming-request\x03\x01\x04\0\x10outgoing-request\x03\x01\x04\0\x0frequest-optio\
-ns\x03\x01\x04\0\x11response-outparam\x03\x01\x01{\x04\0\x0bstatus-code\x03\0)\x04\
-\0\x11incoming-response\x03\x01\x04\0\x0dincoming-body\x03\x01\x04\0\x0ffuture-t\
-railers\x03\x01\x04\0\x11outgoing-response\x03\x01\x04\0\x0doutgoing-body\x03\x01\
-\x04\0\x18future-incoming-response\x03\x01\x01i\"\x01@\0\01\x04\0\x13[constructo\
-r]fields\x012\x01o\x02\x1f!\x01p3\x01j\x011\x01\x1d\x01@\x01\x07entries4\05\x04\0\
-\x18[static]fields.from-list\x016\x01h\"\x01p!\x01@\x02\x04self7\x04name\x1f\08\x04\
-\0\x12[method]fields.get\x019\x01@\x02\x04self7\x04name\x1f\0\x7f\x04\0\x12[meth\
-od]fields.has\x01:\x01j\0\x01\x1d\x01@\x03\x04self7\x04name\x1f\x05value8\0;\x04\
-\0\x12[method]fields.set\x01<\x01@\x02\x04self7\x04name\x1f\0;\x04\0\x15[method]\
-fields.delete\x01=\x01@\x03\x04self7\x04name\x1f\x05value!\0;\x04\0\x15[method]f\
-ields.append\x01>\x01@\x01\x04self7\04\x04\0\x16[method]fields.entries\x01?\x01@\
-\x01\x04self7\01\x04\0\x14[method]fields.clone\x01@\x01h%\x01@\x01\x04self\xc1\0\
-\0\x0b\x04\0\x1f[method]incoming-request.method\x01B\x01@\x01\x04self\xc1\0\0\x0e\
-\x04\0([method]incoming-request.path-with-query\x01C\x01k\x0d\x01@\x01\x04self\xc1\
-\0\0\xc4\0\x04\0\x1f[method]incoming-request.scheme\x01E\x04\0\"[method]incoming\
--request.authority\x01C\x01i#\x01@\x01\x04self\xc1\0\0\xc6\0\x04\0\x20[method]in\
-coming-request.headers\x01G\x01i,\x01j\x01\xc8\0\0\x01@\x01\x04self\xc1\0\0\xc9\0\
-\x04\0\x20[method]incoming-request.consume\x01J\x01i&\x01@\x01\x07headers\xc6\0\0\
-\xcb\0\x04\0\x1d[constructor]outgoing-request\x01L\x01h&\x01i/\x01j\x01\xce\0\0\x01\
-@\x01\x04self\xcd\0\0\xcf\0\x04\0\x1d[method]outgoing-request.body\x01P\x01@\x01\
-\x04self\xcd\0\0\x0b\x04\0\x1f[method]outgoing-request.method\x01Q\x01j\0\0\x01@\
-\x02\x04self\xcd\0\x06method\x0b\0\xd2\0\x04\0#[method]outgoing-request.set-meth\
-od\x01S\x01@\x01\x04self\xcd\0\0\x0e\x04\0([method]outgoing-request.path-with-qu\
-ery\x01T\x01@\x02\x04self\xcd\0\x0fpath-with-query\x0e\0\xd2\0\x04\0,[method]out\
-going-request.set-path-with-query\x01U\x01@\x01\x04self\xcd\0\0\xc4\0\x04\0\x1f[\
-method]outgoing-request.scheme\x01V\x01@\x02\x04self\xcd\0\x06scheme\xc4\0\0\xd2\
-\0\x04\0#[method]outgoing-request.set-scheme\x01W\x04\0\"[method]outgoing-reques\
-t.authority\x01T\x01@\x02\x04self\xcd\0\x09authority\x0e\0\xd2\0\x04\0&[method]o\
-utgoing-request.set-authority\x01X\x01@\x01\x04self\xcd\0\0\xc6\0\x04\0\x20[meth\
-od]outgoing-request.headers\x01Y\x01i'\x01@\0\0\xda\0\x04\0\x1c[constructor]requ\
-est-options\x01[\x01h'\x01k\x01\x01@\x01\x04self\xdc\0\0\xdd\0\x04\0'[method]req\
-uest-options.connect-timeout\x01^\x01@\x02\x04self\xdc\0\x08duration\xdd\0\0\xd2\
-\0\x04\0+[method]request-options.set-connect-timeout\x01_\x04\0*[method]request-\
-options.first-byte-timeout\x01^\x04\0.[method]request-options.set-first-byte-tim\
-eout\x01_\x04\0-[method]request-options.between-bytes-timeout\x01^\x04\01[method\
-]request-options.set-between-bytes-timeout\x01_\x01i(\x01i.\x01j\x01\xe1\0\x01\x1b\
-\x01@\x02\x05param\xe0\0\x08response\xe2\0\x01\0\x04\0\x1d[static]response-outpa\
-ram.set\x01c\x01h+\x01@\x01\x04self\xe4\0\0*\x04\0\x20[method]incoming-response.\
-status\x01e\x01@\x01\x04self\xe4\0\0\xc6\0\x04\0![method]incoming-response.heade\
-rs\x01f\x01@\x01\x04self\xe4\0\0\xc9\0\x04\0![method]incoming-response.consume\x01\
-g\x01h,\x01i\x03\x01j\x01\xe9\0\0\x01@\x01\x04self\xe8\0\0\xea\0\x04\0\x1c[metho\
-d]incoming-body.stream\x01k\x01i-\x01@\x01\x04this\xc8\0\0\xec\0\x04\0\x1c[stati\
-c]incoming-body.finish\x01m\x01h-\x01i\x09\x01@\x01\x04self\xee\0\0\xef\0\x04\0!\
-[method]future-trailers.subscribe\x01p\x01i$\x01k\xf1\0\x01j\x01\xf2\0\x01\x1b\x01\
-j\x01\xf3\0\0\x01k\xf4\0\x01@\x01\x04self\xee\0\0\xf5\0\x04\0\x1b[method]future-\
-trailers.get\x01v\x01@\x01\x07headers\xc6\0\0\xe1\0\x04\0\x1e[constructor]outgoi\
-ng-response\x01w\x01h.\x01@\x01\x04self\xf8\0\0*\x04\0%[method]outgoing-response\
-.status-code\x01y\x01@\x02\x04self\xf8\0\x0bstatus-code*\0\xd2\0\x04\0)[method]o\
-utgoing-response.set-status-code\x01z\x01@\x01\x04self\xf8\0\0\xc6\0\x04\0![meth\
-od]outgoing-response.headers\x01{\x01@\x01\x04self\xf8\0\0\xcf\0\x04\0\x1e[metho\
-d]outgoing-response.body\x01|\x01h/\x01i\x05\x01j\x01\xfe\0\0\x01@\x01\x04self\xfd\
-\0\0\xff\0\x04\0\x1b[method]outgoing-body.write\x01\x80\x01\x01j\0\x01\x1b\x01@\x02\
-\x04this\xce\0\x08trailers\xf2\0\0\x81\x01\x04\0\x1c[static]outgoing-body.finish\
-\x01\x82\x01\x01h0\x01@\x01\x04self\x83\x01\0\xef\0\x04\0*[method]future-incomin\
-g-response.subscribe\x01\x84\x01\x01i+\x01j\x01\x85\x01\x01\x1b\x01j\x01\x86\x01\
-\0\x01k\x87\x01\x01@\x01\x04self\x83\x01\0\x88\x01\x04\0$[method]future-incoming\
--response.get\x01\x89\x01\x01h\x07\x01k\x1b\x01@\x01\x03err\x8a\x01\0\x8b\x01\x04\
-\0\x0fhttp-error-code\x01\x8c\x01\x03\0\x15wasi:http/types@0.2.0\x05\x0d\x02\x03\
-\0\x08\x10outgoing-request\x02\x03\0\x08\x0frequest-options\x02\x03\0\x08\x18fut\
-ure-incoming-response\x02\x03\0\x08\x0aerror-code\x01B\x0f\x02\x03\x02\x01\x0e\x04\
-\0\x10outgoing-request\x03\0\0\x02\x03\x02\x01\x0f\x04\0\x0frequest-options\x03\0\
-\x02\x02\x03\x02\x01\x10\x04\0\x18future-incoming-response\x03\0\x04\x02\x03\x02\
-\x01\x11\x04\0\x0aerror-code\x03\0\x06\x01i\x01\x01i\x03\x01k\x09\x01i\x05\x01j\x01\
-\x0b\x01\x07\x01@\x02\x07request\x08\x07options\x0a\0\x0c\x04\0\x06handle\x01\x0d\
-\x03\0\x20wasi:http/outgoing-handler@0.2.0\x05\x12\x01B\x05\x01r\x02\x07secondsw\
-\x0bnanosecondsy\x04\0\x08datetime\x03\0\0\x01@\0\0\x01\x04\0\x03now\x01\x02\x04\
-\0\x0aresolution\x01\x02\x03\0\x1cwasi:clocks/wall-clock@0.2.0\x05\x13\x02\x03\0\
-\x08\x10incoming-request\x02\x03\0\x08\x11response-outparam\x01B\x08\x02\x03\x02\
-\x01\x14\x04\0\x10incoming-request\x03\0\0\x02\x03\x02\x01\x15\x04\0\x11response\
--outparam\x03\0\x02\x01i\x01\x01i\x03\x01@\x02\x07request\x04\x0cresponse-out\x05\
-\x01\0\x04\0\x06handle\x01\x06\x04\0\x20wasi:http/incoming-handler@0.2.0\x05\x16\
-\x04\0(sunfishcode:hello-wasi-http/target-world\x04\0\x0b\x12\x01\0\x0ctarget-wo\
-rld\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.220.0\x10\
-wit-bindgen-rust\x060.35.0";
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 7309] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x8a8\x01A\x02\x01A%\x01\
+B\x0d\x01m\x04\x03add\x03sub\x03mul\x03div\x04\0\x09operation\x03\0\0\x04\0\x06e\
+ngine\x03\x01\x01i\x02\x01@\0\0\x03\x04\0\x13[constructor]engine\x01\x04\x01h\x02\
+\x01@\x02\x04self\x05\x07operandy\x01\0\x04\0\x1b[method]engine.push-operand\x01\
+\x06\x01@\x02\x04self\x05\x09operation\x01\x01\0\x04\0\x1d[method]engine.push-op\
+eration\x01\x07\x01@\x01\x04self\x05\0y\x04\0\x16[method]engine.execute\x01\x08\x03\
+\x01\x19component:rpn/types@0.1.0\x05\0\x01B\x0a\x04\0\x08pollable\x03\x01\x01h\0\
+\x01@\x01\x04self\x01\0\x7f\x04\0\x16[method]pollable.ready\x01\x02\x01@\x01\x04\
+self\x01\x01\0\x04\0\x16[method]pollable.block\x01\x03\x01p\x01\x01py\x01@\x01\x02\
+in\x04\0\x05\x04\0\x04poll\x01\x06\x03\x01\x12wasi:io/poll@0.2.0\x05\x01\x02\x03\
+\0\x01\x08pollable\x01B\x0f\x02\x03\x02\x01\x02\x04\0\x08pollable\x03\0\0\x01w\x04\
+\0\x07instant\x03\0\x02\x01w\x04\0\x08duration\x03\0\x04\x01@\0\0\x03\x04\0\x03n\
+ow\x01\x06\x01@\0\0\x05\x04\0\x0aresolution\x01\x07\x01i\x01\x01@\x01\x04when\x03\
+\0\x08\x04\0\x11subscribe-instant\x01\x09\x01@\x01\x04when\x05\0\x08\x04\0\x12su\
+bscribe-duration\x01\x0a\x03\x01!wasi:clocks/monotonic-clock@0.2.0\x05\x03\x01B\x04\
+\x04\0\x05error\x03\x01\x01h\0\x01@\x01\x04self\x01\0s\x04\0\x1d[method]error.to\
+-debug-string\x01\x02\x03\x01\x13wasi:io/error@0.2.0\x05\x04\x02\x03\0\x03\x05er\
+ror\x01B(\x02\x03\x02\x01\x05\x04\0\x05error\x03\0\0\x02\x03\x02\x01\x02\x04\0\x08\
+pollable\x03\0\x02\x01i\x01\x01q\x02\x15last-operation-failed\x01\x04\0\x06close\
+d\0\0\x04\0\x0cstream-error\x03\0\x05\x04\0\x0cinput-stream\x03\x01\x04\0\x0dout\
+put-stream\x03\x01\x01h\x07\x01p}\x01j\x01\x0a\x01\x06\x01@\x02\x04self\x09\x03l\
+enw\0\x0b\x04\0\x19[method]input-stream.read\x01\x0c\x04\0\"[method]input-stream\
+.blocking-read\x01\x0c\x01j\x01w\x01\x06\x01@\x02\x04self\x09\x03lenw\0\x0d\x04\0\
+\x19[method]input-stream.skip\x01\x0e\x04\0\"[method]input-stream.blocking-skip\x01\
+\x0e\x01i\x03\x01@\x01\x04self\x09\0\x0f\x04\0\x1e[method]input-stream.subscribe\
+\x01\x10\x01h\x08\x01@\x01\x04self\x11\0\x0d\x04\0![method]output-stream.check-w\
+rite\x01\x12\x01j\0\x01\x06\x01@\x02\x04self\x11\x08contents\x0a\0\x13\x04\0\x1b\
+[method]output-stream.write\x01\x14\x04\0.[method]output-stream.blocking-write-a\
+nd-flush\x01\x14\x01@\x01\x04self\x11\0\x13\x04\0\x1b[method]output-stream.flush\
+\x01\x15\x04\0$[method]output-stream.blocking-flush\x01\x15\x01@\x01\x04self\x11\
+\0\x0f\x04\0\x1f[method]output-stream.subscribe\x01\x16\x01@\x02\x04self\x11\x03\
+lenw\0\x13\x04\0\"[method]output-stream.write-zeroes\x01\x17\x04\05[method]outpu\
+t-stream.blocking-write-zeroes-and-flush\x01\x17\x01@\x03\x04self\x11\x03src\x09\
+\x03lenw\0\x0d\x04\0\x1c[method]output-stream.splice\x01\x18\x04\0%[method]outpu\
+t-stream.blocking-splice\x01\x18\x03\x01\x15wasi:io/streams@0.2.0\x05\x06\x02\x03\
+\0\x02\x08duration\x02\x03\0\x04\x0cinput-stream\x02\x03\0\x04\x0doutput-stream\x01\
+B\xc0\x01\x02\x03\x02\x01\x07\x04\0\x08duration\x03\0\0\x02\x03\x02\x01\x08\x04\0\
+\x0cinput-stream\x03\0\x02\x02\x03\x02\x01\x09\x04\0\x0doutput-stream\x03\0\x04\x02\
+\x03\x02\x01\x05\x04\0\x08io-error\x03\0\x06\x02\x03\x02\x01\x02\x04\0\x08pollab\
+le\x03\0\x08\x01q\x0a\x03get\0\0\x04head\0\0\x04post\0\0\x03put\0\0\x06delete\0\0\
+\x07connect\0\0\x07options\0\0\x05trace\0\0\x05patch\0\0\x05other\x01s\0\x04\0\x06\
+method\x03\0\x0a\x01q\x03\x04HTTP\0\0\x05HTTPS\0\0\x05other\x01s\0\x04\0\x06sche\
+me\x03\0\x0c\x01ks\x01k{\x01r\x02\x05rcode\x0e\x09info-code\x0f\x04\0\x11DNS-err\
+or-payload\x03\0\x10\x01k}\x01r\x02\x08alert-id\x12\x0dalert-message\x0e\x04\0\x1a\
+TLS-alert-received-payload\x03\0\x13\x01ky\x01r\x02\x0afield-name\x0e\x0afield-s\
+ize\x15\x04\0\x12field-size-payload\x03\0\x16\x01kw\x01k\x17\x01q'\x0bDNS-timeou\
+t\0\0\x09DNS-error\x01\x11\0\x15destination-not-found\0\0\x17destination-unavail\
+able\0\0\x19destination-IP-prohibited\0\0\x19destination-IP-unroutable\0\0\x12co\
+nnection-refused\0\0\x15connection-terminated\0\0\x12connection-timeout\0\0\x17c\
+onnection-read-timeout\0\0\x18connection-write-timeout\0\0\x18connection-limit-r\
+eached\0\0\x12TLS-protocol-error\0\0\x15TLS-certificate-error\0\0\x12TLS-alert-r\
+eceived\x01\x14\0\x13HTTP-request-denied\0\0\x1cHTTP-request-length-required\0\0\
+\x16HTTP-request-body-size\x01\x18\0\x1bHTTP-request-method-invalid\0\0\x18HTTP-\
+request-URI-invalid\0\0\x19HTTP-request-URI-too-long\0\0\x20HTTP-request-header-\
+section-size\x01\x15\0\x18HTTP-request-header-size\x01\x19\0!HTTP-request-traile\
+r-section-size\x01\x15\0\x19HTTP-request-trailer-size\x01\x17\0\x18HTTP-response\
+-incomplete\0\0!HTTP-response-header-section-size\x01\x15\0\x19HTTP-response-hea\
+der-size\x01\x17\0\x17HTTP-response-body-size\x01\x18\0\"HTTP-response-trailer-s\
+ection-size\x01\x15\0\x1aHTTP-response-trailer-size\x01\x17\0\x1dHTTP-response-t\
+ransfer-coding\x01\x0e\0\x1cHTTP-response-content-coding\x01\x0e\0\x15HTTP-respo\
+nse-timeout\0\0\x13HTTP-upgrade-failed\0\0\x13HTTP-protocol-error\0\0\x0dloop-de\
+tected\0\0\x13configuration-error\0\0\x0einternal-error\x01\x0e\0\x04\0\x0aerror\
+-code\x03\0\x1a\x01q\x03\x0einvalid-syntax\0\0\x09forbidden\0\0\x09immutable\0\0\
+\x04\0\x0cheader-error\x03\0\x1c\x01s\x04\0\x09field-key\x03\0\x1e\x01p}\x04\0\x0b\
+field-value\x03\0\x20\x04\0\x06fields\x03\x01\x04\0\x07headers\x03\0\"\x04\0\x08\
+trailers\x03\0\"\x04\0\x10incoming-request\x03\x01\x04\0\x10outgoing-request\x03\
+\x01\x04\0\x0frequest-options\x03\x01\x04\0\x11response-outparam\x03\x01\x01{\x04\
+\0\x0bstatus-code\x03\0)\x04\0\x11incoming-response\x03\x01\x04\0\x0dincoming-bo\
+dy\x03\x01\x04\0\x0ffuture-trailers\x03\x01\x04\0\x11outgoing-response\x03\x01\x04\
+\0\x0doutgoing-body\x03\x01\x04\0\x18future-incoming-response\x03\x01\x01i\"\x01\
+@\0\01\x04\0\x13[constructor]fields\x012\x01o\x02\x1f!\x01p3\x01j\x011\x01\x1d\x01\
+@\x01\x07entries4\05\x04\0\x18[static]fields.from-list\x016\x01h\"\x01p!\x01@\x02\
+\x04self7\x04name\x1f\08\x04\0\x12[method]fields.get\x019\x01@\x02\x04self7\x04n\
+ame\x1f\0\x7f\x04\0\x12[method]fields.has\x01:\x01j\0\x01\x1d\x01@\x03\x04self7\x04\
+name\x1f\x05value8\0;\x04\0\x12[method]fields.set\x01<\x01@\x02\x04self7\x04name\
+\x1f\0;\x04\0\x15[method]fields.delete\x01=\x01@\x03\x04self7\x04name\x1f\x05val\
+ue!\0;\x04\0\x15[method]fields.append\x01>\x01@\x01\x04self7\04\x04\0\x16[method\
+]fields.entries\x01?\x01@\x01\x04self7\01\x04\0\x14[method]fields.clone\x01@\x01\
+h%\x01@\x01\x04self\xc1\0\0\x0b\x04\0\x1f[method]incoming-request.method\x01B\x01\
+@\x01\x04self\xc1\0\0\x0e\x04\0([method]incoming-request.path-with-query\x01C\x01\
+k\x0d\x01@\x01\x04self\xc1\0\0\xc4\0\x04\0\x1f[method]incoming-request.scheme\x01\
+E\x04\0\"[method]incoming-request.authority\x01C\x01i#\x01@\x01\x04self\xc1\0\0\xc6\
+\0\x04\0\x20[method]incoming-request.headers\x01G\x01i,\x01j\x01\xc8\0\0\x01@\x01\
+\x04self\xc1\0\0\xc9\0\x04\0\x20[method]incoming-request.consume\x01J\x01i&\x01@\
+\x01\x07headers\xc6\0\0\xcb\0\x04\0\x1d[constructor]outgoing-request\x01L\x01h&\x01\
+i/\x01j\x01\xce\0\0\x01@\x01\x04self\xcd\0\0\xcf\0\x04\0\x1d[method]outgoing-req\
+uest.body\x01P\x01@\x01\x04self\xcd\0\0\x0b\x04\0\x1f[method]outgoing-request.me\
+thod\x01Q\x01j\0\0\x01@\x02\x04self\xcd\0\x06method\x0b\0\xd2\0\x04\0#[method]ou\
+tgoing-request.set-method\x01S\x01@\x01\x04self\xcd\0\0\x0e\x04\0([method]outgoi\
+ng-request.path-with-query\x01T\x01@\x02\x04self\xcd\0\x0fpath-with-query\x0e\0\xd2\
+\0\x04\0,[method]outgoing-request.set-path-with-query\x01U\x01@\x01\x04self\xcd\0\
+\0\xc4\0\x04\0\x1f[method]outgoing-request.scheme\x01V\x01@\x02\x04self\xcd\0\x06\
+scheme\xc4\0\0\xd2\0\x04\0#[method]outgoing-request.set-scheme\x01W\x04\0\"[meth\
+od]outgoing-request.authority\x01T\x01@\x02\x04self\xcd\0\x09authority\x0e\0\xd2\
+\0\x04\0&[method]outgoing-request.set-authority\x01X\x01@\x01\x04self\xcd\0\0\xc6\
+\0\x04\0\x20[method]outgoing-request.headers\x01Y\x01i'\x01@\0\0\xda\0\x04\0\x1c\
+[constructor]request-options\x01[\x01h'\x01k\x01\x01@\x01\x04self\xdc\0\0\xdd\0\x04\
+\0'[method]request-options.connect-timeout\x01^\x01@\x02\x04self\xdc\0\x08durati\
+on\xdd\0\0\xd2\0\x04\0+[method]request-options.set-connect-timeout\x01_\x04\0*[m\
+ethod]request-options.first-byte-timeout\x01^\x04\0.[method]request-options.set-\
+first-byte-timeout\x01_\x04\0-[method]request-options.between-bytes-timeout\x01^\
+\x04\01[method]request-options.set-between-bytes-timeout\x01_\x01i(\x01i.\x01j\x01\
+\xe1\0\x01\x1b\x01@\x02\x05param\xe0\0\x08response\xe2\0\x01\0\x04\0\x1d[static]\
+response-outparam.set\x01c\x01h+\x01@\x01\x04self\xe4\0\0*\x04\0\x20[method]inco\
+ming-response.status\x01e\x01@\x01\x04self\xe4\0\0\xc6\0\x04\0![method]incoming-\
+response.headers\x01f\x01@\x01\x04self\xe4\0\0\xc9\0\x04\0![method]incoming-resp\
+onse.consume\x01g\x01h,\x01i\x03\x01j\x01\xe9\0\0\x01@\x01\x04self\xe8\0\0\xea\0\
+\x04\0\x1c[method]incoming-body.stream\x01k\x01i-\x01@\x01\x04this\xc8\0\0\xec\0\
+\x04\0\x1c[static]incoming-body.finish\x01m\x01h-\x01i\x09\x01@\x01\x04self\xee\0\
+\0\xef\0\x04\0![method]future-trailers.subscribe\x01p\x01i$\x01k\xf1\0\x01j\x01\xf2\
+\0\x01\x1b\x01j\x01\xf3\0\0\x01k\xf4\0\x01@\x01\x04self\xee\0\0\xf5\0\x04\0\x1b[\
+method]future-trailers.get\x01v\x01@\x01\x07headers\xc6\0\0\xe1\0\x04\0\x1e[cons\
+tructor]outgoing-response\x01w\x01h.\x01@\x01\x04self\xf8\0\0*\x04\0%[method]out\
+going-response.status-code\x01y\x01@\x02\x04self\xf8\0\x0bstatus-code*\0\xd2\0\x04\
+\0)[method]outgoing-response.set-status-code\x01z\x01@\x01\x04self\xf8\0\0\xc6\0\
+\x04\0![method]outgoing-response.headers\x01{\x01@\x01\x04self\xf8\0\0\xcf\0\x04\
+\0\x1e[method]outgoing-response.body\x01|\x01h/\x01i\x05\x01j\x01\xfe\0\0\x01@\x01\
+\x04self\xfd\0\0\xff\0\x04\0\x1b[method]outgoing-body.write\x01\x80\x01\x01j\0\x01\
+\x1b\x01@\x02\x04this\xce\0\x08trailers\xf2\0\0\x81\x01\x04\0\x1c[static]outgoin\
+g-body.finish\x01\x82\x01\x01h0\x01@\x01\x04self\x83\x01\0\xef\0\x04\0*[method]f\
+uture-incoming-response.subscribe\x01\x84\x01\x01i+\x01j\x01\x85\x01\x01\x1b\x01\
+j\x01\x86\x01\0\x01k\x87\x01\x01@\x01\x04self\x83\x01\0\x88\x01\x04\0$[method]fu\
+ture-incoming-response.get\x01\x89\x01\x01h\x07\x01k\x1b\x01@\x01\x03err\x8a\x01\
+\0\x8b\x01\x04\0\x0fhttp-error-code\x01\x8c\x01\x03\x01\x15wasi:http/types@0.2.0\
+\x05\x0a\x01B\x05\x01p}\x01@\x01\x03lenw\0\0\x04\0\x10get-random-bytes\x01\x01\x01\
+@\0\0w\x04\0\x0eget-random-u64\x01\x02\x03\x01\x18wasi:random/random@0.2.0\x05\x0b\
+\x01B\x05\x02\x03\x02\x01\x09\x04\0\x0doutput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\
+\x04\0\x0aget-stdout\x01\x03\x03\x01\x15wasi:cli/stdout@0.2.0\x05\x0c\x01B\x05\x02\
+\x03\x02\x01\x09\x04\0\x0doutput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\x04\0\x0ag\
+et-stderr\x01\x03\x03\x01\x15wasi:cli/stderr@0.2.0\x05\x0d\x01B\x05\x02\x03\x02\x01\
+\x08\x04\0\x0cinput-stream\x03\0\0\x01i\x01\x01@\0\0\x02\x04\0\x09get-stdin\x01\x03\
+\x03\x01\x14wasi:cli/stdin@0.2.0\x05\x0e\x02\x03\0\x05\x10outgoing-request\x02\x03\
+\0\x05\x0frequest-options\x02\x03\0\x05\x18future-incoming-response\x02\x03\0\x05\
+\x0aerror-code\x01B\x0f\x02\x03\x02\x01\x0f\x04\0\x10outgoing-request\x03\0\0\x02\
+\x03\x02\x01\x10\x04\0\x0frequest-options\x03\0\x02\x02\x03\x02\x01\x11\x04\0\x18\
+future-incoming-response\x03\0\x04\x02\x03\x02\x01\x12\x04\0\x0aerror-code\x03\0\
+\x06\x01i\x01\x01i\x03\x01k\x09\x01i\x05\x01j\x01\x0b\x01\x07\x01@\x02\x07reques\
+t\x08\x07options\x0a\0\x0c\x04\0\x06handle\x01\x0d\x03\x01\x20wasi:http/outgoing\
+-handler@0.2.0\x05\x13\x01B\x05\x01r\x02\x07secondsw\x0bnanosecondsy\x04\0\x08da\
+tetime\x03\0\0\x01@\0\0\x01\x04\0\x03now\x01\x02\x04\0\x0aresolution\x01\x02\x03\
+\x01\x1cwasi:clocks/wall-clock@0.2.0\x05\x14\x02\x03\0\x05\x10incoming-request\x02\
+\x03\0\x05\x11response-outparam\x01B\x08\x02\x03\x02\x01\x15\x04\0\x10incoming-r\
+equest\x03\0\0\x02\x03\x02\x01\x16\x04\0\x11response-outparam\x03\0\x02\x01i\x01\
+\x01i\x03\x01@\x02\x07request\x04\x0cresponse-out\x05\x01\0\x04\0\x06handle\x01\x06\
+\x04\x01\x20wasi:http/incoming-handler@0.2.0\x05\x17\x04\x01(sunfishcode:hello-w\
+asi-http/target-world\x04\0\x0b\x12\x01\0\x0ctarget-world\x03\0\0\0G\x09producer\
+s\x01\x0cprocessed-by\x02\x0dwit-component\x070.215.0\x10wit-bindgen-rust\x060.3\
+0.0";
 #[inline(never)]
 #[doc(hidden)]
 pub fn __link_custom_section_describing_imports() {

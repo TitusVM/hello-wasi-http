@@ -1,1 +1,4 @@
+*/target
 /target
+rpn/Cargo.lock
+*.wasm
