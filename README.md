@@ -1,4 +1,6 @@
 # Composed http server
+Run the `run.sh` script or follow this step-by-step:
+
 Build both components:
 ```sh
 cargo component build --target=wasm32-unknown-unknown
@@ -11,7 +13,7 @@ wac plug target/wasm32-unknown-unknown/debug/hello_wasi_http.wasm --plug rpn/tar
 ```
 Then serve composed component:
 ```sh
-wasmtime serve --addr=0.0.0.0:8080 composition.wasm
+wasmtime serve -S cli --addr=0.0.0.0:8080 signed_composed_safe.wasm
 ```
 
 # Hello WASI HTTP!

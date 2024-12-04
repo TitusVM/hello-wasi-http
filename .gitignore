@@ -1,4 +1,5 @@
 */target
 /target
-rpn/Cargo.lock
 *.wasm
+/binaries
+*.key
